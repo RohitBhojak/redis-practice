@@ -1,16 +1,11 @@
-const { default: axios } = require("axios");
-const express = require("express");
-const { createClient } = require("redis");
+import axios from "axios";
+import express from "express";
+import redisClient from "./redisClient.js";
 
 const PORT = 3000;
 const DEFAULT_EXPIRY_TIME = 3600;
 
 const app = express();
-const redisClient = createClient();
-
-const startRedis = async () => await redisClient.connect();
-
-startRedis();
 
 app.get("/photos", async (req, res) => {
   const cached = await redisClient.get("photos");
